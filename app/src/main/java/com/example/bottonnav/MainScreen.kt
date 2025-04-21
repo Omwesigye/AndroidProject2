@@ -1,4 +1,6 @@
 package com.example.bottonnav
+import  com.example.bottonnav.pages.SettingsViewModelFactory
+import android.app.Application
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,18 +26,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.bottonnav.pages.RoutinesPage
+import com.example.bottonnav.pages.SettingsScreen
+import com.example.bottonnav.pages.SettingsViewModel
 import com.example.bottonnav.pages.favoritesPage
-import com.example.bottonnav.pages.ideasPage
-import com.example.bottonnav.pages.settingsPage
 import com.example.bottonnav.pages.thingsPage
 
 @Composable
 fun mainScreen(modifier: Modifier = Modifier) {
     val navItemList = listOf(
         Navaitem("Favorites", Icons.Default.Favorite, 0),
-        Navaitem("Ideas", Icons.Default.ShoppingCart, 5),
+        Navaitem("Routines", Icons.Default.ShoppingCart, 0),
         Navaitem("Settings", Icons.Default.Settings, 0),
-        Navaitem("Things", Icons.Default.List, 1)
+        Navaitem("Things", Icons.Default.List, 0)
 
     )
     var selectedIndex by remember {
@@ -77,9 +82,20 @@ fun mainScreen(modifier: Modifier = Modifier) {
 fun contentScreen(modifier: Modifier = Modifier, selectedIndex : Int) {
     when(selectedIndex){
         0-> favoritesPage()
-        1-> ideasPage()
-        2 -> settingsPage()
+        1-> RoutinesPage()
+        2 -> SettingsScreenWithViewModel()
         3-> thingsPage()
     }
-
 }
+@Composable
+fun SettingsScreenWithViewModel() {
+    val context = LocalContext.current
+    val factory = remember { SettingsViewModelFactory(context.applicationContext as Application) }
+    val viewModel: SettingsViewModel = viewModel(factory = factory)
+
+    SettingsScreen(viewModel = viewModel)
+}
+
+
+
+

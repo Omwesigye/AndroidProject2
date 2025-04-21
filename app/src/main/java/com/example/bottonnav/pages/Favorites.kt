@@ -39,8 +39,6 @@ fun favoritesPage(modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier.fillMaxSize()
             .background(color = Color.White),
-        //verticalArrangement = Arrangement.Center,
-        //  horizontalAlignment = Alignment.CenterHorizontally
 
 
     ) {
